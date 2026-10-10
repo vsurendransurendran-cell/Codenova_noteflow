@@ -1,0 +1,8 @@
+{
+  "name": "Notes Application",
+  "description": "Production-grade full-stack Notes app with real-time search, responsive grid and list views, toast alerts, and SQLite CRUD backend.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

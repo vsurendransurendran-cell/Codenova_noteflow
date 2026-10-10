@@ -1,0 +1,120 @@
+/* ==============================================================================
+   Loading, Empty & Error State Styles
+   ============================================================================== */
+
+/* Loading Skeleton Shimmer */
+.skeleton-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line {
+  height: 14px;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-line.title {
+  height: 20px;
+  width: 70%;
+  margin-bottom: var(--space-2);
+}
+
+.skeleton-line.short {
+  width: 40%;
+}
+
+.skeleton-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Empty State */
+.empty-state-card {
+  background-color: var(--bg-surface);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  max-width: 500px;
+  margin: var(--space-8) auto;
+}
+
+.empty-state-icon {
+  width: 56px;
+  height: 56px;
+  background-color: var(--bg-secondary);
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state-content h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.empty-state-content p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Error State Banner */
+.error-state-box {
+  background-color: var(--color-danger-light);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  color: #991b1b;
+}
+
+.error-state-message {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 0.875rem;
+  font-weight: 500;
+}

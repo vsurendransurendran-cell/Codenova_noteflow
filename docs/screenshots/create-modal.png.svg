@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="450" viewBox="0 0 600 450" fill="none">
+  <rect width="600" height="450" fill="rgba(15,23,42,0.45)"/>
+  <!-- Modal Dialog -->
+  <rect x="50" y="30" width="500" height="390" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <rect x="50" y="30" width="500" height="54" rx="16" fill="#FFFFFF"/>
+  <line x1="50" y1="84" x2="550" y2="84" stroke="#E2E8F0"/>
+  <text x="74" y="64" font-family="sans-serif" font-weight="700" font-size="16" fill="#0F172A">Create New Note</text>
+  <text x="520" y="64" font-family="sans-serif" font-size="16" fill="#94A3B8">✕</text>
+  
+  <!-- Form Title Input -->
+  <text x="74" y="115" font-family="sans-serif" font-weight="600" font-size="12" fill="#475569">Title *</text>
+  <text x="500" y="115" font-family="sans-serif" font-size="11" fill="#94A3B8">23/255</text>
+  <rect x="74" y="125" width="452" height="38" rx="6" fill="#FFFFFF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="86" y="149" font-family="sans-serif" font-size="13" fill="#0F172A">Sprint Planning Notes</text>
+  
+  <!-- Form Content Input -->
+  <text x="74" y="190" font-family="sans-serif" font-weight="600" font-size="12" fill="#475569">Content *</text>
+  <text x="490" y="190" font-family="sans-serif" font-size="11" fill="#94A3B8">142 chars</text>
+  <rect x="74" y="200" width="452" height="130" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="86" y="224" font-family="sans-serif" font-size="13" fill="#0F172A">1. Finalize SQLite schema migrations.</text>
+  <text x="86" y="246" font-family="sans-serif" font-size="13" fill="#0F172A">2. Verify debounce filtering with ~250ms delay.</text>
+  <text x="86" y="268" font-family="sans-serif" font-size="13" fill="#0F172A">3. Ensure network error toasts appear on server failure.</text>
+  
+  <!-- Modal Footer -->
+  <rect x="50" y="350" width="500" height="70" fill="#F8FAFC"/>
+  <line x1="50" y1="350" x2="550" y2="350" stroke="#E2E8F0"/>
+  <text x="74" y="388" font-family="sans-serif" font-size="11" fill="#94A3B8">Press Ctrl+Enter to save</text>
+  
+  <rect x="360" y="367" width="70" height="34" rx="6" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="378" y="389" font-family="sans-serif" font-size="12" fill="#475569">Cancel</text>
+  
+  <rect x="440" y="367" width="86" height="34" rx="6" fill="#2563EB"/>
+  <text x="454" y="389" font-family="sans-serif" font-weight="600" font-size="12" fill="#FFFFFF">Save Note</text>
+</svg>

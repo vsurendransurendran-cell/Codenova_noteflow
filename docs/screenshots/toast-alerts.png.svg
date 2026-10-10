@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="260" viewBox="0 0 480 260" fill="none">
+  <rect width="480" height="260" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+  <text x="24" y="32" font-family="sans-serif" font-weight="700" font-size="14" fill="#0F172A">Toast Alerts &amp; Network Failure Notification Stack</text>
+
+  <!-- Success Toast -->
+  <rect x="24" y="52" width="432" height="74" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <rect x="24" y="52" width="5" height="74" rx="2" fill="#16A34A"/>
+  <circle cx="50" cy="80" r="10" fill="#DCFCE7"/>
+  <text x="46" y="84" font-family="sans-serif" font-weight="700" font-size="12" fill="#16A34A">✓</text>
+  <text x="72" y="76" font-family="sans-serif" font-weight="700" font-size="13" fill="#0F172A">Note Created Successfully</text>
+  <text x="72" y="96" font-family="sans-serif" font-size="11" fill="#475569">Note "Sprint Planning Notes" was saved to SQLite database.</text>
+
+  <!-- Network / Server Down Toast -->
+  <rect x="24" y="142" width="432" height="84" rx="8" fill="#FFFAF5" stroke="#FDBA74"/>
+  <rect x="24" y="142" width="5" height="84" rx="2" fill="#EA580C"/>
+  <circle cx="50" cy="174" r="10" fill="#FFEDD5"/>
+  <text x="45" y="178" font-family="sans-serif" font-weight="700" font-size="11" fill="#EA580C">✕</text>
+  <text x="72" y="166" font-family="sans-serif" font-weight="700" font-size="13" fill="#9A3412">Network Failure (Server Down)</text>
+  <text x="72" y="186" font-family="sans-serif" font-size="11" fill="#7C2D12">Cannot reach the backend server. Please verify the Express</text>
+  <text x="72" y="202" font-family="sans-serif" font-size="11" fill="#7C2D12">server process is running at http://localhost:5000.</text>
+</svg>
