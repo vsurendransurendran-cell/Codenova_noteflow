@@ -13,6 +13,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import notesRoutes from './server/src/routes/notes.routes.js';
+import aiRoutes from './server/src/routes/ai.routes.js';
 import { errorHandler, notFoundHandler } from './server/src/middleware/errorHandler.js';
 import { getDatabase } from './server/src/db/connection.js';
 
@@ -23,7 +24,7 @@ const __dirname = path.dirname(__filename);
 
 async function createServer() {
   const app = express();
-  const PORT = Number(process.env.DEFAULT_APP_PORT) || 3000;
+  const PORT = Number(process.env.PORT) || Number(process.env.DEFAULT_APP_PORT) || 3000;
   const isProd = process.env.NODE_ENV === 'production';
 
   // Initialize DB and ensure schema exists
@@ -50,6 +51,7 @@ async function createServer() {
 
   // REST API Routes
   app.use('/api/notes', notesRoutes);
+  app.use('/api/ai', aiRoutes);
 
   // 404 handler for API routes
   app.use('/api/*', notFoundHandler);

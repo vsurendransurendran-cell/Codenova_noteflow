@@ -1,6 +1,6 @@
 /* ==============================================================================
    Design System & CSS Custom Properties
-   Clean, modern, accessible tokens without external frameworks
+   Clean, modern, accessible tokens with Dark Theme and Color Accents
    ============================================================================== */
 
 :root {
@@ -11,6 +11,7 @@
   --bg-surface-hover: #f1f5f9;
   --bg-secondary: #f1f5f9;
   --bg-tertiary: #e2e8f0;
+  --bg-sidebar: #ffffff;
 
   --border-subtle: #e2e8f0;
   --border-default: #cbd5e1;
@@ -27,18 +28,37 @@
   --color-primary-light: #eff6ff;
   --color-primary-border: #bfdbfe;
 
+  --color-secondary: #7c3aed;
+  --color-secondary-hover: #6d28d9;
+  --color-secondary-light: #f5f3ff;
+  --color-secondary-border: #ddd6fe;
+
   --color-danger: #dc2626;
   --color-danger-hover: #b91c1c;
   --color-danger-light: #fef2f2;
   --color-danger-border: #fecaca;
 
   --color-success: #16a34a;
+  --color-success-hover: #15803d;
   --color-success-light: #f0fdf4;
   --color-success-border: #bbf7d0;
 
   --color-warning: #d97706;
   --color-warning-light: #fffbeb;
   --color-warning-border: #fde68a;
+
+  /* Card Color Variations */
+  --card-tint-default: transparent;
+  --card-tint-blue: rgba(37, 99, 235, 0.04);
+  --card-border-blue: rgba(37, 99, 235, 0.25);
+  --card-tint-purple: rgba(124, 58, 237, 0.04);
+  --card-border-purple: rgba(124, 58, 237, 0.25);
+  --card-tint-emerald: rgba(16, 185, 129, 0.04);
+  --card-border-emerald: rgba(16, 185, 129, 0.25);
+  --card-tint-amber: rgba(245, 158, 11, 0.04);
+  --card-border-amber: rgba(245, 158, 11, 0.25);
+  --card-tint-rose: rgba(244, 63, 94, 0.04);
+  --card-border-rose: rgba(244, 63, 94, 0.25);
 
   /* Typography */
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -64,15 +84,81 @@
 
   /* Shadows */
   --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Layout */
-  --max-width: 1200px;
+  --sidebar-width: 270px;
+  --sidebar-collapsed-width: 72px;
+  --max-width: 1400px;
+}
+
+/* ==============================================================================
+   Dark Mode Theme Override Tokens
+   ============================================================================== */
+[data-theme="dark"] {
+  --bg-primary: #0b0f19;
+  --bg-surface: #111827;
+  --bg-surface-elevated: #1f2937;
+  --bg-surface-hover: #1e293b;
+  --bg-secondary: #172033;
+  --bg-tertiary: #1f293d;
+  --bg-sidebar: #0e1422;
+
+  --border-subtle: #1e293b;
+  --border-default: #334155;
+  --border-focus: #60a5fa;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-primary-light: rgba(59, 130, 246, 0.15);
+  --color-primary-border: rgba(59, 130, 246, 0.35);
+
+  --color-secondary: #8b5cf6;
+  --color-secondary-hover: #a78bfa;
+  --color-secondary-light: rgba(139, 92, 246, 0.15);
+  --color-secondary-border: rgba(139, 92, 246, 0.35);
+
+  --color-danger: #ef4444;
+  --color-danger-hover: #f87171;
+  --color-danger-light: rgba(239, 68, 68, 0.15);
+  --color-danger-border: rgba(239, 68, 68, 0.35);
+
+  --color-success: #22c55e;
+  --color-success-hover: #4ade80;
+  --color-success-light: rgba(34, 197, 94, 0.15);
+  --color-success-border: rgba(34, 197, 94, 0.35);
+
+  --color-warning: #f59e0b;
+  --color-warning-light: rgba(245, 158, 11, 0.15);
+  --color-warning-border: rgba(245, 158, 11, 0.35);
+
+  --card-tint-default: transparent;
+  --card-tint-blue: rgba(59, 130, 246, 0.1);
+  --card-border-blue: rgba(59, 130, 246, 0.3);
+  --card-tint-purple: rgba(139, 92, 246, 0.1);
+  --card-border-purple: rgba(139, 92, 246, 0.3);
+  --card-tint-emerald: rgba(16, 185, 129, 0.1);
+  --card-border-emerald: rgba(16, 185, 129, 0.3);
+  --card-tint-amber: rgba(245, 158, 11, 0.1);
+  --card-border-amber: rgba(245, 158, 11, 0.3);
+  --card-tint-rose: rgba(244, 63, 94, 0.1);
+  --card-border-rose: rgba(244, 63, 94, 0.3);
+
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
 }

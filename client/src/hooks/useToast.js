@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 let toastIdCounter = 0;
 
 /**
- * Custom hook for accessible toast notifications
+ * Custom hook for accessible toast notifications with action button support
  */
 export function useToast() {
   const [toasts, setToasts] = useState([]);
@@ -12,9 +12,9 @@ export function useToast() {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
-  const addToast = useCallback(({ type = 'info', title = '', message = '', duration = 4000 }) => {
+  const addToast = useCallback(({ type = 'info', title = '', message = '', action = null, duration = 4000 }) => {
     const id = ++toastIdCounter;
-    const newToast = { id, type, title, message };
+    const newToast = { id, type, title, message, action };
 
     setToasts((prev) => [...prev, newToast]);
 
@@ -27,8 +27,8 @@ export function useToast() {
     return id;
   }, [removeToast]);
 
-  const showSuccess = useCallback((message, title = 'Success') => {
-    return addToast({ type: 'success', title, message });
+  const showSuccess = useCallback((message, title = 'Success', action = null) => {
+    return addToast({ type: 'success', title, message, action, duration: action ? 6000 : 4000 });
   }, [addToast]);
 
   const showError = useCallback((message, title = 'Request Failed') => {

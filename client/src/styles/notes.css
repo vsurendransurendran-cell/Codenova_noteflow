@@ -1,17 +1,39 @@
 /* ==============================================================================
-   Notes Grid, List View & Card Styles
-   Responsive CSS Grid with auto-fill / minmax
+   NoteFlow Notes Grid, List View & Rich Card Styles
    ============================================================================== */
+
+/* Section Grouping (Pinned vs Others) */
+.notes-section-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+  padding-left: var(--space-1);
+}
+
+.notes-group-icon {
+  color: var(--color-primary);
+}
 
 /* Grid View */
 .notes-container.grid-view {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: var(--space-4);
   align-items: stretch;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .notes-container.grid-view {
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: var(--space-5);
@@ -29,8 +51,8 @@
 .note-card {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4) var(--space-5);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -38,27 +60,134 @@
   cursor: pointer;
   position: relative;
   outline: none;
+  min-height: 190px;
 }
 
 .note-card:hover {
   border-color: var(--border-default);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
 
 .note-card:focus-visible {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-/* Card Header & Content */
+.note-card.is-pinned {
+  border-color: var(--color-primary-border);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+}
+
+/* Color Accent Variations */
+.note-card.color-blue {
+  background-color: var(--card-tint-blue);
+  border-color: var(--card-border-blue);
+}
+.note-card.color-purple {
+  background-color: var(--card-tint-purple);
+  border-color: var(--card-border-purple);
+}
+.note-card.color-emerald {
+  background-color: var(--card-tint-emerald);
+  border-color: var(--card-border-emerald);
+}
+.note-card.color-amber {
+  background-color: var(--card-tint-amber);
+  border-color: var(--card-border-amber);
+}
+.note-card.color-rose {
+  background-color: var(--card-tint-rose);
+  border-color: var(--card-border-rose);
+}
+
+/* Card Top Bar (Category & Quick Actions) */
+.card-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  gap: var(--space-2);
+}
+
+.card-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.card-category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.card-category-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.card-pinned-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+}
+
+.card-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.card-icon-btn {
+  padding: 4px;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.card-icon-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface-hover);
+}
+
+.card-icon-btn.starred {
+  color: #eab308;
+}
+
+.card-icon-btn.pinned {
+  color: var(--color-primary);
+}
+
+/* Card Body & Snippet */
 .note-card-main {
-  margin-bottom: var(--space-4);
+  flex: 1;
+  margin-bottom: var(--space-3);
 }
 
 .note-card-title {
   font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
   margin-bottom: var(--space-2);
   line-height: 1.35;
@@ -66,7 +195,7 @@
 }
 
 .note-card-snippet {
-  font-size: 0.875rem;
+  font-size: 0.84rem;
   color: var(--text-secondary);
   line-height: 1.55;
   white-space: pre-wrap;
@@ -77,24 +206,70 @@
   overflow: hidden;
 }
 
-/* List view adjustments */
-.notes-container.list-view .note-card {
-  flex-direction: row;
+/* Checklist Progress Meter */
+.card-checklist-meter {
+  margin-top: var(--space-3);
+  padding: var(--space-2);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.checklist-meter-info {
+  display: flex;
   align-items: center;
-  padding: var(--space-4) var(--space-5);
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
 }
 
-.notes-container.list-view .note-card-main {
-  margin-bottom: 0;
-  flex: 1;
-  padding-right: var(--space-4);
+.checklist-meter-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.notes-container.list-view .note-card-snippet {
-  -webkit-line-clamp: 2;
+.checklist-meter-pct {
+  color: var(--color-primary);
 }
 
-/* Card Footer & Metadata */
+.checklist-track {
+  width: 100%;
+  height: 4px;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.checklist-progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-full);
+  transition: width 200ms ease-out;
+}
+
+/* Tags List */
+.card-tags-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: var(--space-3);
+}
+
+.card-tag {
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Card Footer */
 .note-card-footer {
   display: flex;
   align-items: center;
@@ -102,15 +277,9 @@
   gap: var(--space-2);
   padding-top: var(--space-3);
   border-top: 1px solid var(--border-subtle);
+  margin-top: auto;
 }
 
-.notes-container.list-view .note-card-footer {
-  padding-top: 0;
-  border-top: none;
-  flex-shrink: 0;
-}
-
-/* Quiet metadata with typographic separator */
 .note-metadata {
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -120,24 +289,25 @@
 }
 
 .note-meta-sep {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
-/* Card Actions */
 .note-card-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .card-action-btn {
-  padding: 0.375rem;
+  padding: 0.35rem;
   color: var(--text-muted);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color var(--transition-fast), background-color var(--transition-fast);
+  gap: 4px;
+  font-size: 0.75rem;
+  transition: all var(--transition-fast);
 }
 
 .card-action-btn:hover {
@@ -150,10 +320,105 @@
   background-color: var(--color-danger-light);
 }
 
+.card-action-btn.restore {
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--color-primary-light);
+}
+
+.card-action-btn.restore:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+/* List View Adjustments */
+.notes-container.list-view .note-card {
+  flex-direction: row;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  min-height: auto;
+}
+
+.notes-container.list-view .card-top-bar {
+  margin-bottom: 0;
+  margin-right: var(--space-3);
+}
+
+.notes-container.list-view .note-card-main {
+  margin-bottom: 0;
+  padding-right: var(--space-4);
+}
+
+.notes-container.list-view .note-card-snippet {
+  -webkit-line-clamp: 2;
+}
+
+.notes-container.list-view .note-card-footer {
+  padding-top: 0;
+  border-top: none;
+  flex-shrink: 0;
+  gap: var(--space-3);
+}
+
+/* Trash Banner */
+.trash-banner {
+  background-color: var(--color-danger-light);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.trash-banner-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.trash-banner-icon {
+  color: var(--color-danger);
+  flex-shrink: 0;
+}
+
+.trash-banner p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.btn-danger-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-danger);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.btn-danger-outline:hover {
+  background-color: var(--color-danger);
+  color: #ffffff;
+}
+
 /* Search Term Highlighting */
 mark.search-highlight {
   background-color: #fef08a;
   color: #713f12;
   border-radius: 2px;
   padding: 0 2px;
+}
+
+[data-theme="dark"] mark.search-highlight {
+  background-color: #854d0e;
+  color: #fef08a;
 }

@@ -131,3 +131,23 @@
 .toast-close-btn:hover {
   color: var(--text-primary);
 }
+
+.toast-action-btn {
+  align-self: center;
+  flex-shrink: 0;
+  padding: 0.25rem 0.625rem;
+  background-color: var(--bg-surface-hover);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.toast-action-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--text-inverse);
+  border-color: var(--color-primary);
+}

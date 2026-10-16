@@ -133,6 +133,107 @@ class WasmSqliteWrapper {
 
 let activeDb = null;
 
+export async function runMigrations(db) {
+  // 1. Ensure table exists with all columns
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS notes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      content TEXT NOT NULL,
+      category TEXT DEFAULT 'Personal',
+      tags TEXT DEFAULT '[]',
+      pinned INTEGER DEFAULT 0,
+      favorite INTEGER DEFAULT 0,
+      color TEXT DEFAULT 'default',
+      is_trashed INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
+  // 2. Safely add any missing columns to existing database
+  try {
+    const columns = db.prepare("PRAGMA table_info(notes);").all();
+    const colNames = new Set(columns.map(c => c.name));
+
+    if (!colNames.has('category')) {
+      db.exec("ALTER TABLE notes ADD COLUMN category TEXT DEFAULT 'Personal';");
+    }
+    if (!colNames.has('tags')) {
+      db.exec("ALTER TABLE notes ADD COLUMN tags TEXT DEFAULT '[]';");
+    }
+    if (!colNames.has('pinned')) {
+      db.exec("ALTER TABLE notes ADD COLUMN pinned INTEGER DEFAULT 0;");
+    }
+    if (!colNames.has('favorite')) {
+      db.exec("ALTER TABLE notes ADD COLUMN favorite INTEGER DEFAULT 0;");
+    }
+    if (!colNames.has('color')) {
+      db.exec("ALTER TABLE notes ADD COLUMN color TEXT DEFAULT 'default';");
+    }
+    if (!colNames.has('is_trashed')) {
+      db.exec("ALTER TABLE notes ADD COLUMN is_trashed INTEGER DEFAULT 0;");
+    }
+  } catch (err) {
+    console.warn('[DB Migration Warning]', err.message);
+  }
+
+  // 3. Seed initial rich demo notes if table is completely empty
+  try {
+    const countRow = db.prepare("SELECT COUNT(*) as count FROM notes;").get();
+    if (countRow && countRow.count === 0) {
+      console.log('[Database] Seeding initial CodeNova portfolio notes...');
+      const seedNotes = [
+        {
+          title: "🚀 Welcome to NoteFlow — CodeNova Project",
+          content: "Welcome to NoteFlow! Designed for maximum productivity with:\n\n- 📌 Pin important notes to keep them on top\n- ⭐ Star favorites for instant filtering\n- 🏷️ Categorize by Work, Study, Ideas, and CodeNova\n- ✍️ Rich Markdown, checklists, & color accents\n- 🌙 Dark Mode support\n- 🤖 AI Summarization & Note Assistant\n- ↩️ Trash with instant Undo recovery",
+          category: "CodeNova",
+          tags: JSON.stringify(["internship", "portfolio", "getting-started"]),
+          pinned: 1,
+          favorite: 1,
+          color: "blue"
+        },
+        {
+          title: "📋 CodeNova Internship Milestones & Checklist",
+          content: "Track project deliverables and internship goals:\n\n[x] Initialize full-stack SQLite WASM architecture\n[x] Implement responsive layout & sidebar navigation\n[x] Add Pinning, Favorites, and Categories\n[x] Build real-time multi-field search and tags\n[x] Implement Trash Bin with 1-click Undo\n[ ] Record portfolio demo walkthrough video\n[ ] Publish LinkedIn project showcase post",
+          category: "Work",
+          tags: JSON.stringify(["roadmap", "checklist", "goals"]),
+          pinned: 1,
+          favorite: 0,
+          color: "purple"
+        },
+        {
+          title: "💡 Architecture & Tech Stack Highlights",
+          content: "NoteFlow Technical Specifications:\n\n- Frontend: React 19, Lucide Icons, Custom CSS Design System\n- Backend: Express, Parameterized SQLite WASM with file persistence\n- Features: Debounced real-time search, responsive mobile drawer, JSON/MD import/export\n- AI: Server-side Gemini API integration for instant summaries and action item extraction",
+          category: "Study",
+          tags: JSON.stringify(["architecture", "react", "sqlite", "node"]),
+          pinned: 0,
+          favorite: 1,
+          color: "emerald"
+        },
+        {
+          title: "🎯 Weekly Sprint Ideas & Innovation",
+          content: "Brainstorming future enhancements:\n\n1. Graph view showing inter-connected notes with tag clustering\n2. Voice dictation note capture\n3. Export to PDF and Notion markdown format",
+          category: "Ideas",
+          tags: JSON.stringify(["brainstorming", "ideas"]),
+          pinned: 0,
+          favorite: 0,
+          color: "amber"
+        }
+      ];
+
+      for (const item of seedNotes) {
+        db.prepare(`
+          INSERT INTO notes (title, content, category, tags, pinned, favorite, color, is_trashed, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, 0, datetime('now'), datetime('now'));
+        `).run(item.title, item.content, item.category, item.tags, item.pinned, item.favorite, item.color);
+      }
+    }
+  } catch (seedErr) {
+    console.warn('[Database Seed Warning]', seedErr.message);
+  }
+}
+
 /**
  * Initializes and returns the SQLite database connection.
  * @param {string} [customPath] Optional custom database file path
@@ -153,7 +254,6 @@ export async function getDatabase(customPath) {
   try {
     const { default: Database } = await import('better-sqlite3');
     activeDb = new Database(dbPath);
-    // Enable WAL mode and foreign keys for better-sqlite3
     try {
       activeDb.pragma('journal_mode = WAL');
       activeDb.pragma('foreign_keys = ON');
@@ -161,6 +261,7 @@ export async function getDatabase(customPath) {
       // pragma is optional
     }
     console.log(`[Database] Connected using native better-sqlite3 at ${dbPath}`);
+    await runMigrations(activeDb);
     return activeDb;
   } catch {
     // Fall through to Wasm SQLite engine
@@ -172,6 +273,7 @@ export async function getDatabase(customPath) {
     const SQL = await initSqlJs();
     activeDb = new WasmSqliteWrapper(SQL, dbPath);
     console.log(`[Database] Connected using SQLite WASM engine with persistent storage at ${dbPath}`);
+    await runMigrations(activeDb);
     return activeDb;
   } catch (wasmError) {
     console.error('[Database] Failed to initialize SQLite engine:', wasmError);
@@ -179,4 +281,4 @@ export async function getDatabase(customPath) {
   }
 }
 
-export default { getDatabase };
+export default { getDatabase, runMigrations };

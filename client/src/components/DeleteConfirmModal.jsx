@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { AlertTriangle, Trash2, X } from 'lucide-react';
 
 /**
- * Accessible confirmation modal for deleting a note
+ * Accessible confirmation modal for deleting note or emptying trash
  */
 export function DeleteConfirmModal({
   isOpen,
   note,
+  isBulkTrash = false,
   onClose,
   onConfirm,
 }) {
@@ -32,11 +33,15 @@ export function DeleteConfirmModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  if (!isOpen || !note) return null;
+  if (!isOpen) return null;
 
   const handleConfirm = async () => {
     setIsDeleting(true);
-    await onConfirm(note.id, note.title);
+    if (isBulkTrash) {
+      await onConfirm();
+    } else if (note) {
+      await onConfirm(note.id, note.title);
+    }
     setIsDeleting(false);
     onClose();
   };
@@ -59,7 +64,9 @@ export function DeleteConfirmModal({
         <div className="modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-danger)' }}>
             <AlertTriangle size={20} aria-hidden="true" />
-            <h2 id="delete-dialog-title" style={{ fontSize: '1rem' }}>Delete Note</h2>
+            <h2 id="delete-dialog-title" style={{ fontSize: '1.05rem', fontWeight: '700' }}>
+              {isBulkTrash ? 'Empty Trash Bin' : 'Permanently Delete Note'}
+            </h2>
           </div>
           <button
             type="button"
@@ -72,8 +79,14 @@ export function DeleteConfirmModal({
         </div>
 
         <div className="modal-body" style={{ padding: 'var(--space-5) var(--space-6)' }}>
-          <p id="delete-dialog-desc" style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-            Are you sure you want to permanently delete <strong>"{note.title}"</strong>? This action cannot be undone.
+          <p id="delete-dialog-desc" style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.5' }}>
+            {isBulkTrash ? (
+              'Are you sure you want to permanently delete all items in the Trash? This action cannot be reversed.'
+            ) : (
+              <>
+                Are you sure you want to permanently delete <strong>"{note?.title}"</strong>? It will be removed from your database permanently.
+              </>
+            )}
           </p>
         </div>
 
@@ -95,7 +108,7 @@ export function DeleteConfirmModal({
               autoFocus
             >
               <Trash2 size={15} />
-              <span>{isDeleting ? 'Deleting...' : 'Delete Note'}</span>
+              <span>{isDeleting ? 'Deleting...' : isBulkTrash ? 'Empty All' : 'Permanently Delete'}</span>
             </button>
           </div>
         </div>

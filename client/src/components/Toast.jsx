@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, AlertCircle, WifiOff, X, Info } from 'lucide-react';
 
 /**
- * Accessible Individual Toast Alert
+ * Accessible Individual Toast Alert with optional action button (e.g. Undo)
  */
 export function Toast({ toast, onDismiss }) {
   const [isDismissing, setIsDismissing] = useState(false);
@@ -38,6 +38,18 @@ export function Toast({ toast, onDismiss }) {
         {toast.title && <div className="toast-title">{toast.title}</div>}
         <div className="toast-message">{toast.message}</div>
       </div>
+      {toast.action && (
+        <button
+          type="button"
+          onClick={() => {
+            toast.action.onClick();
+            handleDismiss();
+          }}
+          className="toast-action-btn"
+        >
+          {toast.action.label}
+        </button>
+      )}
       <button
         type="button"
         onClick={handleDismiss}
